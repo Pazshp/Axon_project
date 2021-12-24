@@ -15,9 +15,11 @@ class Detector:
 
         while True:
             rectangle_list = []
+
             msg, frame = receiver.recv_image()
+
             if "quit" in msg:
-                self.quit()
+                self.quit(sender, msg, frame)
                 return False
 
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -44,5 +46,5 @@ class Detector:
 
             sender.send_image(rectangle_list, frame)
 
-    def quit(self):
-        pass
+    def quit(self, sender, msg, frame):
+        sender.send_image(msg, frame)
